@@ -14,15 +14,15 @@ struct HomeViewConfiguration {
 
 final class HomeView: UIView {
 
-    private let restaurantCellIdentifier = "RestaurantCellIdentifier"
-
     private var restaurants: [Restaurant] = []
 
     private lazy var tableView: UITableView = {
 
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: self.restaurantCellIdentifier)
+        tableView.register(RestaurantCellView.self, forCellReuseIdentifier: RestaurantCellView.cellIdentifier)
+        tableView.estimatedRowHeight = 100
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.dataSource = self
         return tableView
     }()
@@ -81,9 +81,26 @@ extension HomeView: UITableViewDataSource {
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: self.restaurantCellIdentifier)!
-        cell.textLabel?.text = self.restaurants[indexPath.row].name
-        return cell
+        guard let restaurantCell = tableView.dequeueReusableCell(withIdentifier: RestaurantCellView.cellIdentifier, for: indexPath) as? RestaurantCellView else {
+            return .init()
+        }
+
+        restaurantCell.configure(
+            with: .init(
+                name: "Percoriro Trattoria",
+                detail: "Italiana • 38-48 min",
+                icon: "restaurant-logo"
+            )
+        )
+
+        return restaurantCell
+    }
+}
+
+extension UITableViewCell {
+
+    static var cellIdentifier: String {
+        String(describing: self)
     }
 }
 
