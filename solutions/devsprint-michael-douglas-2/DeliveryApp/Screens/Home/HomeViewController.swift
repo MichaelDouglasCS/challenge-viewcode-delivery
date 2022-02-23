@@ -9,7 +9,7 @@ import UIKit
 
 class HomeViewController: UIViewController {
 
-    private let deliveryApi = DeliveryApi()
+    private var deliveryApi: DeliveryApiProtocol
 
     private let homeView: HomeView = {
 
@@ -17,9 +17,9 @@ class HomeViewController: UIViewController {
         return homeView
     }()
 
-    init() {
+    init(deliveryApi: DeliveryApiProtocol = DeliveryApi()) {
+        self.deliveryApi = deliveryApi
         super.init(nibName: nil, bundle: nil)
-
         navigationItem.title = "Delivery App"
     }
     
@@ -28,6 +28,7 @@ class HomeViewController: UIViewController {
     }
 
     override func viewDidLoad() {
+        super.viewDidLoad()
 
         navigationController?.navigationBar.prefersLargeTitles = true
 

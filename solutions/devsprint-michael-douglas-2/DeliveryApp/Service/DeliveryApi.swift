@@ -7,7 +7,13 @@
 
 import Foundation
 
-struct DeliveryApi {
+protocol DeliveryApiProtocol {
+    func fetchRestaurants(_ completion: @escaping ([Restaurant]?) -> Void)
+    func searchAddresses(_ completion: @escaping ([Address]?) -> Void)
+    func fetchRestaurantDetails(_ completion: @escaping (RestaurantDetails?) -> Void)
+}
+
+struct DeliveryApi: DeliveryApiProtocol {
 
     func fetchRestaurants(_ completion: @escaping ([Restaurant]?) -> Void) {
 

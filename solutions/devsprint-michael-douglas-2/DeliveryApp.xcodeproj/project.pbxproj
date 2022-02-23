@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		611CAC4127C6EE27006ABF03 /* HomeViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611CAC4027C6EE27006ABF03 /* HomeViewControllerTests.swift */; };
 		61241AD627C58C3300FAECC8 /* RestaurantCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61241AD527C58C3300FAECC8 /* RestaurantCellView.swift */; };
+		61F11AC627C6E25B00E4BFF3 /* RestaurantCellViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F11AC527C6E25B00E4BFF3 /* RestaurantCellViewTests.swift */; };
 		62D17A3B27C51F0100DCFC44 /* CategoryCellViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D17A3A27C51F0100DCFC44 /* CategoryCellViewSnapshotTests.swift */; };
 		62F9513627C4486500294957 /* UIViewPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F9513527C4486500294957 /* UIViewPreview.swift */; };
 		62F9513927C4498B00294957 /* CategoryCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F9513827C4498B00294957 /* CategoryCellView.swift */; };
@@ -53,7 +55,9 @@
 /* Begin PBXFileReference section */
 		2680EA58D2E665EE737986B6 /* Pods-DeliveryApp-DeliveryAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeliveryApp-DeliveryAppTests.debug.xcconfig"; path = "Target Support Files/Pods-DeliveryApp-DeliveryAppTests/Pods-DeliveryApp-DeliveryAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5463EDC4E7F85337A2A06DCD /* Pods-DeliveryApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeliveryApp.release.xcconfig"; path = "Target Support Files/Pods-DeliveryApp/Pods-DeliveryApp.release.xcconfig"; sourceTree = "<group>"; };
+		611CAC4027C6EE27006ABF03 /* HomeViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerTests.swift; sourceTree = "<group>"; };
 		61241AD527C58C3300FAECC8 /* RestaurantCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCellView.swift; sourceTree = "<group>"; };
+		61F11AC527C6E25B00E4BFF3 /* RestaurantCellViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCellViewTests.swift; sourceTree = "<group>"; };
 		62D17A3A27C51F0100DCFC44 /* CategoryCellViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellViewSnapshotTests.swift; sourceTree = "<group>"; };
 		62F9513527C4486500294957 /* UIViewPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewPreview.swift; sourceTree = "<group>"; };
 		62F9513827C4498B00294957 /* CategoryCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellView.swift; sourceTree = "<group>"; };
@@ -111,12 +115,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		611CAC3F27C6EE1C006ABF03 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				611CAC4027C6EE27006ABF03 /* HomeViewControllerTests.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
 		61241AD427C58BAC00FAECC8 /* RestaurantCell */ = {
 			isa = PBXGroup;
 			children = (
 				61241AD527C58C3300FAECC8 /* RestaurantCellView.swift */,
 			);
 			path = RestaurantCell;
+			sourceTree = "<group>";
+		};
+		61F11AC327C6E23700E4BFF3 /* Compoments */ = {
+			isa = PBXGroup;
+			children = (
+				61F11AC427C6E24B00E4BFF3 /* RestaurantCellViewTests */,
+			);
+			path = Compoments;
+			sourceTree = "<group>";
+		};
+		61F11AC427C6E24B00E4BFF3 /* RestaurantCellViewTests */ = {
+			isa = PBXGroup;
+			children = (
+				61F11AC527C6E25B00E4BFF3 /* RestaurantCellViewTests.swift */,
+			);
+			path = RestaurantCellViewTests;
 			sourceTree = "<group>";
 		};
 		62D17A3927C51EB000DCFC44 /* SnapshotTests */ = {
@@ -181,6 +209,8 @@
 		983271D2272752B50010C63A /* DeliveryAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				611CAC3F27C6EE1C006ABF03 /* Screens */,
+				61F11AC327C6E23700E4BFF3 /* Compoments */,
 				62D17A3927C51EB000DCFC44 /* SnapshotTests */,
 				983271D3272752B50010C63A /* DeliveryAppTests.swift */,
 			);
@@ -536,8 +566,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61F11AC627C6E25B00E4BFF3 /* RestaurantCellViewTests.swift in Sources */,
 				62D17A3B27C51F0100DCFC44 /* CategoryCellViewSnapshotTests.swift in Sources */,
 				983271D4272752B50010C63A /* DeliveryAppTests.swift in Sources */,
+				611CAC4127C6EE27006ABF03 /* HomeViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
