@@ -30,17 +30,16 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        homeView.updateLoading(with: true)
         navigationController?.navigationBar.prefersLargeTitles = true
-
+        
         deliveryApi.fetchRestaurants { restaurants in
-
             guard let restaurants = restaurants else {
                 return
             }
-
             DispatchQueue.main.async {
-
                 self.homeView.updateView(with: restaurants)
+                self.homeView.updateLoading(with: false)
             }
         }
     }
