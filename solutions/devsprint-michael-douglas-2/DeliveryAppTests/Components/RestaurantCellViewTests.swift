@@ -17,37 +17,37 @@ final class RestaurantCellViewTest: XCTestCase {
     var sut = RestaurantCellView()
 
     func test_snapshot_whenAllInfo_shouldSucceed() {
-        sut.configure(with: .init(name: "Abelha Gulosa", detail: "Padaria - 30 minutos", icon: "restaurant-logo"))
+        sut.configure(with: .fixture())
 
         assertSnapshot(matching: sut, as: .image(size: snapshotSize), record: isRecord)
     }
 
     func test_snapshot_whenOnlyName_shouldSucceed() {
-        sut.configure(with: .init(name: "Abelha Gulosa", detail: "", icon: "restaurant-logo"))
+        sut.configure(with: .fixture(detail: ""))
 
         assertSnapshot(matching: sut, as: .image(size: snapshotSize), record: isRecord)
     }
 
     func test_snapshot_whenOnlyDetail_shouldSucceed() {
-        sut.configure(with: .init(name: "", detail: "Padaria - 30 minutos", icon: "restaurant-logo"))
+        sut.configure(with: .fixture(name: ""))
 
         assertSnapshot(matching: sut, as: .image(size: snapshotSize), record: isRecord)
     }
 
     func test_snapshot_whenIconEmpty_shouldSucceed() {
-        sut.configure(with: .init(name: "Abelha Gulosa", detail: "Padaria - 30 minutos", icon: ""))
+        sut.configure(with: .fixture(icon: ""))
 
         assertSnapshot(matching: sut, as: .image(size: snapshotSize), record: isRecord)
     }
 
     func test_snapshot_whenLargeInfos_shouldSucceed() {
-        sut.configure(with: .init(name: "Abelha Gulosa Abelha Gulosa Abelha Gulosa Abelha Gulosa Abelha Gulosa Abelha Gulosa", detail: "Padaria - 30 minutos Padaria - 30 minutos Padaria - 30 minutos Padaria - 30 minutos Padaria - 30 minutos Padaria - 30 minutos", icon: "restaurant-logo"))
+        sut.configure(with: .fixture(name: "Abelha Gulosa Abelha Gulosa Abelha Gulosa Abelha Gulosa Abelha Gulosa Abelha Gulosa", detail: "Padaria - 30 minutos Padaria - 30 minutos Padaria - 30 minutos Padaria - 30 minutos Padaria - 30 minutos Padaria - 30 minutos"))
 
         assertSnapshot(matching: sut, as: .image(size: snapshotSize), record: isRecord)
     }
 
     func test_snapshot_whenEmptyInfos_shouldSucceed() {
-        sut.configure(with: .init(name: "", detail: "", icon: ""))
+        sut.configure(with: .fixture(name: "", detail: "", icon: ""))
 
         assertSnapshot(matching: sut, as: .image(size: snapshotSize), record: isRecord)
     }

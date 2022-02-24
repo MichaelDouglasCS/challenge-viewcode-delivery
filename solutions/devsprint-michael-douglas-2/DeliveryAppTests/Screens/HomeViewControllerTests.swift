@@ -13,6 +13,7 @@ import XCTest
 final class HomeViewControllerTests: XCTestCase {
 
     let deliveryApiSpy = DeliveryApiSpy()
+    
     lazy var sut: HomeViewController = {
         let sut = HomeViewController(deliveryApi: deliveryApiSpy)
         let navigationController = UINavigationController(rootViewController: sut)

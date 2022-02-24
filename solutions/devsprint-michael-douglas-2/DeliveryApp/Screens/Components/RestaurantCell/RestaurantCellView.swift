@@ -118,3 +118,24 @@ extension RestaurantCellView {
         ])
     }
 }
+
+#if canImport(SwiftUI) && DEBUG
+import SwiftUI
+
+struct RestaurantCellViewPreview: PreviewProvider {
+    static var previews: some View {
+        UIViewPreview {
+            let restaurantCellView = RestaurantCellView()
+            restaurantCellView.configure(
+                with: .init(
+                    name: "Percoriro Trattoria",
+                    detail: "Italiana • 38-48 min",
+                    icon: "restaurant-logo"
+                )
+            )
+
+            return restaurantCellView
+        }
+    }
+}
+#endif
