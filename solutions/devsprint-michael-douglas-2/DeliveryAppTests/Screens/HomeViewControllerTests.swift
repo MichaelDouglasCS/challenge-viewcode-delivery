@@ -13,9 +13,10 @@ import XCTest
 final class HomeViewControllerTests: XCTestCase {
 
     let deliveryApiSpy = DeliveryApiSpy()
+    let customViewSpy = HomeViewSpy()
     
     lazy var sut: HomeViewController = {
-        let sut = HomeViewController(deliveryApi: deliveryApiSpy)
+        let sut = HomeViewController(customView: customViewSpy, deliveryApi: deliveryApiSpy)
         let navigationController = UINavigationController(rootViewController: sut)
         return sut
     }()
@@ -32,6 +33,18 @@ final class HomeViewControllerTests: XCTestCase {
         sut.viewDidLoad()
 
         XCTAssertTrue(deliveryApiSpy.fetchRestaurantsBeCalled)
+        XCTAssertTrue(customViewSpy.updateStateCalled)
+    }
+}
+
+class HomeViewSpy: UIView, HomeViewProtocol {
+
+    private(set) var updateStateCalled: Bool = false
+    private(set) var updateStatePassed: HomeUseCase.GetRestaurants.ViewModel?
+
+    func updateState(state: HomeUseCase.GetRestaurants.ViewModel) {
+        updateStateCalled = true
+        updateStatePassed = state
     }
 }
 

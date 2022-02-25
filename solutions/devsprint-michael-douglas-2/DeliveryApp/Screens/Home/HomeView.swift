@@ -8,16 +8,19 @@
 import UIKit
 
 struct HomeViewConfiguration {
-
+    
     let restaurants: [String]
 }
 
-final class HomeView: UIView {
+protocol HomeViewProtocol: UIView {
+    func updateState(state: HomeUseCase.GetRestaurants.ViewModel)
+}
 
-    private var restaurants: [Restaurant] = []
+final class HomeView: UIView, HomeViewProtocol {
 
+    private var restaurants: [RestaurantCellViewModel] = []
+    
     private lazy var tableView: UITableView = {
-
         let tableView = UITableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(RestaurantCellView.self, forCellReuseIdentifier: RestaurantCellView.cellIdentifier)
@@ -34,46 +37,49 @@ final class HomeView: UIView {
         loadingView.isHidden = true
         return loadingView
     }()
-
+    
     init() {
-
         super.init(frame: .zero)
-
+        
         self.setupViews()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func updateView(with restaurants: [Restaurant]) {
+    func updateState(state: HomeUseCase.GetRestaurants.ViewModel) {
 
-        self.restaurants = restaurants
-        self.tableView.reloadData()
-    }
-    
-    func updateLoading(with isLoading: Bool) {
-        loadingView.updateLoading(isLoading)
+        switch state {
+        case .loading:
+            loadingView.updateLoading(true)
+        case .content(let restaurants):
+            loadingView.updateLoading(false)
+            self.restaurants = restaurants
+            self.tableView.reloadData()
+        case .error:
+            loadingView.updateLoading(false)
+            break
+        }
     }
 }
 
 private extension HomeView {
-
+    
     func setupViews() {
+        
         self.backgroundColor = .white
-
+        
         self.configureSubviews()
-        self.configureSubviewsConstraints()
+        self.configureLoadingViewConstraints()
+        self.configureTableViewConstraints()
+        
     }
-
+    
     func configureSubviews() {
+        
         self.addSubview(self.tableView)
         self.addSubview(self.loadingView)
-    }
-
-    func configureSubviewsConstraints() {
-        configureLoadingViewConstraints()
-        configureTableViewConstraints()
     }
     
     func configureLoadingViewConstraints() {
@@ -96,32 +102,32 @@ private extension HomeView {
 }
 
 extension HomeView: UITableViewDataSource {
-
+    
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
+        
         return self.restaurants.count
     }
-
+    
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        guard let restaurantCell = tableView.dequeueReusableCell(withIdentifier: RestaurantCellView.cellIdentifier, for: indexPath) as? RestaurantCellView else {
+        let restaurant = restaurants[indexPath.row]
+
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: RestaurantCellView.cellIdentifier, for: indexPath) as? RestaurantCellView else {
             return .init()
         }
 
-        restaurantCell.configure(
-            with: .init(
-                name: "Percoriro Trattoria",
-                detail: "Italiana • 38-48 min",
-                icon: "restaurant-logo"
-            )
+        cell.configure(with: .init(
+            name: restaurant.name,
+            detail: restaurant.detail,
+            icon: "restaurant-logo")
         )
 
-        return restaurantCell
+        return cell
     }
 }
 
 extension UITableViewCell {
-
+    
     static var cellIdentifier: String {
         String(describing: self)
     }

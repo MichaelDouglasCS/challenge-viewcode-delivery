@@ -8,26 +8,30 @@
 import Foundation
 
 protocol DeliveryApiProtocol {
-    func fetchRestaurants(_ completion: @escaping ([Restaurant]?) -> Void)
+    func fetchRestaurants(_ completion: @escaping (Result<[Restaurant], Error>) -> Void)
     func searchAddresses(_ completion: @escaping ([Address]?) -> Void)
     func fetchRestaurantDetails(_ completion: @escaping (RestaurantDetails?) -> Void)
 }
 
+enum CustomError: Error {
+    case emptyContent
+}
+
 struct DeliveryApi: DeliveryApiProtocol {
 
-    func fetchRestaurants(_ completion: @escaping ([Restaurant]?) -> Void) {
+    func fetchRestaurants(_ completion: @escaping (Result<[Restaurant], Error>) -> Void) {
 
         let url = URL(string: "https://raw.githubusercontent.com/devpass-tech/challenge-delivery-app/main/api/home_restaurant_list.json")!
 
         let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
 
-            guard error == nil else {
-                completion(nil)
+            if let error = error {
+                completion(.failure(error))
                 return
             }
 
             guard let data = data else {
-                completion(nil)
+                completion(.failure(CustomError.emptyContent))
                 return
             }
 
@@ -35,10 +39,9 @@ struct DeliveryApi: DeliveryApiProtocol {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let restaurants = try decoder.decode([Restaurant].self, from: data)
-                completion(restaurants)
+                completion(.success(restaurants))
             } catch {
-                print(error)
-                completion(nil)
+                completion(.failure(error))
             }
         }
 

@@ -11,6 +11,7 @@ struct Restaurant: Decodable {
     let name: String
     let category: String
     let deliveryTime: DeliveryTime
+    let icon: String = "restaurant-logo"
 }
 
 struct DeliveryTime: Decodable {
