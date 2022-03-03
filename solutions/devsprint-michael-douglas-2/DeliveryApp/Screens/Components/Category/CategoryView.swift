@@ -7,11 +7,11 @@
 
 import UIKit
 
-final class CategoryCellView: UIView {
+final class CategoryView: UIView {
 
     private lazy var imageView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "pizza")
+        image.backgroundColor = .lightGray
         image.layer.cornerRadius = 8
         image.clipsToBounds = true
         return image
@@ -19,7 +19,6 @@ final class CategoryCellView: UIView {
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Pizza"
         label.textAlignment = .center
         return label
     }()
@@ -34,6 +33,11 @@ final class CategoryCellView: UIView {
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+
+    func configure(with viewModel: ViewModel) {
+        titleLabel.text = viewModel.title
+        imageView.image = UIImage(named: viewModel.image)
     }
 
     private func addSubviews() {
@@ -60,3 +64,26 @@ final class CategoryCellView: UIView {
         backgroundColor = .white
     }
 }
+
+extension CategoryView {
+
+    struct ViewModel {
+        var title: String
+        var image: String
+    }
+}
+
+#if canImport(SwiftUI) && DEBUG
+import SwiftUI
+
+struct CategoryCellViewViewPreview: PreviewProvider {
+    static var previews: some View {
+        UIViewPreview {
+            let categoryCell = CategoryView()
+            categoryCell.configure(with: .init(title: "Pizza", image: "pizza"))
+            return categoryCell
+        }
+        .previewLayout(.fixed(width: 100, height: 100))
+    }
+}
+#endif
