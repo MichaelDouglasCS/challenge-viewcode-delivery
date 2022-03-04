@@ -45,6 +45,7 @@ class HomeViewController: UIViewController {
 
     override func loadView() {
         self.view = homeView
+        homeView.delegate = self
     }
 
     override func viewDidLoad() {
@@ -91,9 +92,18 @@ class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: UISearchBarDelegate {
+
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    }
+}
+
+extension HomeViewController: HomeViewDelegate {
+
+    func didSelectContent() {
+        let detailsViewController = RestaurantDetailsViewController()
+        self.navigationController?.pushViewController(detailsViewController, animated: true)
     }
 }

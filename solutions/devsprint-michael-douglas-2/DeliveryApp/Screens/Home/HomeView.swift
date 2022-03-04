@@ -12,10 +12,18 @@ struct HomeViewConfiguration {
 }
 
 protocol HomeViewProtocol: UIView {
+    var delegate: HomeViewDelegate? { get set }
+
     func updateState(state: HomeUseCase.GetRestaurants.ViewModel)
 }
 
+protocol HomeViewDelegate: AnyObject {
+    func didSelectContent()
+}
+
 final class HomeView: UIView, HomeViewProtocol {
+
+    // MARK: - MOCK
 
     private var categories: [Category] = [
         .init(title: "Pizza", image: "pizza"),
@@ -32,7 +40,7 @@ final class HomeView: UIView, HomeViewProtocol {
         .init(title: "Pizza", image: "pizza")
     ]
 
-    private var restaurants: [RestaurantCellViewModel] = []
+    // MARK: - View Properties
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
@@ -42,6 +50,7 @@ final class HomeView: UIView, HomeViewProtocol {
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableView.automaticDimension
         tableView.dataSource = self
+        tableView.delegate = self
         return tableView
     }()
     
@@ -65,6 +74,16 @@ final class HomeView: UIView, HomeViewProtocol {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+
+    // MARK: - Internal Properties
+
+    weak var delegate: HomeViewDelegate?
+
+    // MARK: - Private Properties
+
+    private var restaurants: [RestaurantCellViewModel] = []
+
+    // MARK: - Initiliazers
     
     init() {
         super.init(frame: .zero)
@@ -75,6 +94,8 @@ final class HomeView: UIView, HomeViewProtocol {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Internal Methods
 
     func updateState(state: HomeUseCase.GetRestaurants.ViewModel) {
 
@@ -150,6 +171,8 @@ private extension HomeView {
     }
 }
 
+// MARK: - UITableViewDataSource
+
 extension HomeView: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -198,5 +221,11 @@ extension HomeView: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
 
+extension HomeView: UITableViewDelegate {
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate?.didSelectContent()
+    }
+}

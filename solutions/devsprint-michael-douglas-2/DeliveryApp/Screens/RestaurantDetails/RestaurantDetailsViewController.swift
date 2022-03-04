@@ -11,15 +11,13 @@ class RestaurantDetailsViewController: UIViewController {
 
     private let deliveryApi = DeliveryApi()
 
-    private let restaurantDetailsView: RestaurantDetailsView = {
-
+    private lazy var restaurantDetailsView: RestaurantDetailsView = {
         let restaurantDetailsView = RestaurantDetailsView()
         return restaurantDetailsView
     }()
 
     init() {
         super.init(nibName: nil, bundle: nil)
-
     }
 
     required init?(coder: NSCoder) {
