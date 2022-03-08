@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 struct HomeViewConfiguration {
     let restaurants: [String]
@@ -44,7 +45,6 @@ final class HomeView: UIView, HomeViewProtocol {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(RestaurantCellView.self, forCellReuseIdentifier: RestaurantCellView.cellIdentifier)
         tableView.register(CategoryCarouselCellView.self, forCellReuseIdentifier: CategoryCarouselCellView.cellIdentifier)
         tableView.estimatedRowHeight = 100
@@ -57,21 +57,18 @@ final class HomeView: UIView, HomeViewProtocol {
     private lazy var loadingView: LoadingView = {
         let loadingView = LoadingView()
         loadingView.setLoadingMessage("Carregando Restaurantes...")
-        loadingView.translatesAutoresizingMaskIntoConstraints = false
         loadingView.isHidden = true
         return loadingView
     }()
     
     private lazy var addressView: AddressView = {
         let view = AddressView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         return view
     }()
     
     private lazy var dividerView: DividerView = {
         let view = DividerView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
@@ -136,38 +133,62 @@ private extension HomeView {
     }
     
     func configureLoadingViewConstraints() {
-        NSLayoutConstraint.activate([
-            self.loadingView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            self.loadingView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            self.loadingView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            self.loadingView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-        ])
+//        NSLayoutConstraint.activate([
+//            self.loadingView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+//            self.loadingView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+//            self.loadingView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+//            self.loadingView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+//        ])
+
+        loadingView.snp.makeConstraints { make in
+            make.edges.equalTo(safeAreaLayoutGuide)
+        }
     }
     
     func configureAddressViewConstraints() {
-        NSLayoutConstraint.activate([
-            self.addressView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-            self.addressView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            self.addressView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
-            self.addressView.heightAnchor.constraint(equalToConstant: 66)
-        ])
+//        NSLayoutConstraint.activate([
+//            self.addressView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+//            self.addressView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+//            self.addressView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
+//            self.addressView.heightAnchor.constraint(equalToConstant: 66)
+//        ])
+
+        addressView.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide)
+            make.leading.equalTo(safeAreaLayoutGuide).offset(16)
+            make.trailing.equalTo(safeAreaLayoutGuide)
+            make.height.equalTo(66)
+        }
     }
     
     func configureDividerViewConstraints() {
-        NSLayoutConstraint.activate([
-            self.dividerView.topAnchor.constraint(equalTo: self.addressView.bottomAnchor, constant: 8),
-            self.dividerView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
-            self.dividerView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
-        ])
+//        NSLayoutConstraint.activate([
+//            self.dividerView.topAnchor.constraint(equalTo: self.addressView.bottomAnchor, constant: 8),
+//            self.dividerView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
+//            self.dividerView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
+//        ])
+
+        dividerView.snp.makeConstraints { make in
+            make.top.equalTo(addressView.snp.bottom).offset(8)
+            make.leading.equalTo(safeAreaLayoutGuide)
+            make.trailing.equalTo(safeAreaLayoutGuide)
+        }
     }
     
     func configureTableViewConstraints() {
-        NSLayoutConstraint.activate([
-            self.tableView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
-            self.tableView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
-            self.tableView.topAnchor.constraint(equalTo: self.dividerView.bottomAnchor, constant: 10),
-            self.tableView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
-        ])
+//        NSLayoutConstraint.activate([
+//            self.tableView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
+//            self.tableView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
+//            self.tableView.topAnchor.constraint(equalTo: self.dividerView.bottomAnchor, constant: 10),
+//            self.tableView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
+//        ])
+
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(dividerView).offset(10)
+            make.leading.equalTo(safeAreaLayoutGuide)
+            make.trailing.equalTo(safeAreaLayoutGuide)
+            make.bottom.equalTo(safeAreaLayoutGuide)
+        }
     }
 }
 

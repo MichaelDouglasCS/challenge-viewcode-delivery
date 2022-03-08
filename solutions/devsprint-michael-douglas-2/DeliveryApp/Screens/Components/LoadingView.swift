@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class LoadingView: UIView {
     
@@ -15,7 +16,6 @@ final class LoadingView: UIView {
     
     private lazy var loadingContainer: UIView = {
         let container = UIView(frame: .zero)
-        container.translatesAutoresizingMaskIntoConstraints = false
         container.isOpaque = true
         container.isHidden = false
         container.backgroundColor = .white
@@ -24,7 +24,6 @@ final class LoadingView: UIView {
     
     private lazy var loadingSpinner: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(frame: .zero)
-        indicator.translatesAutoresizingMaskIntoConstraints = false
         indicator.style = .large
         indicator.isHidden = false
         indicator.color = .black
@@ -33,7 +32,6 @@ final class LoadingView: UIView {
     
     private lazy var loadingMessage: UILabel = {
         let label = UILabel(frame: .zero)
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Carregando..."
         label.isHidden = false
         label.textAlignment = .center
@@ -88,15 +86,30 @@ private extension LoadingView {
     }
     
     func configureSubviewsConstraints() {
-        NSLayoutConstraint.activate([
-            self.loadingContainer.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            self.loadingContainer.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            self.loadingContainer.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            self.loadingContainer.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor ),
-            self.loadingMessage.centerYAnchor.constraint(equalTo: loadingContainer.centerYAnchor, constant: -50),
-            self.loadingMessage.centerXAnchor.constraint(equalTo: loadingContainer.centerXAnchor),
-            self.loadingSpinner.topAnchor.constraint(equalTo: loadingMessage.bottomAnchor, constant: 10),
-            self.loadingSpinner.centerXAnchor.constraint(equalTo: loadingContainer.centerXAnchor),
-        ])
+//        NSLayoutConstraint.activate([
+//            self.loadingContainer.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+//            self.loadingContainer.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+//            self.loadingContainer.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+//            self.loadingContainer.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor ),
+//            self.loadingMessage.centerYAnchor.constraint(equalTo: loadingContainer.centerYAnchor, constant: -50),
+//            self.loadingMessage.centerXAnchor.constraint(equalTo: loadingContainer.centerXAnchor),
+//            self.loadingSpinner.topAnchor.constraint(equalTo: loadingMessage.bottomAnchor, constant: 10),
+//            self.loadingSpinner.centerXAnchor.constraint(equalTo: loadingContainer.centerXAnchor),
+//        ])
+
+        loadingContainer.snp.makeConstraints { make in
+            make.edges.equalTo(safeAreaLayoutGuide)
+        }
+
+        loadingMessage.snp.makeConstraints { make in
+            make.centerY.equalTo(loadingContainer).offset(-50)
+            make.centerX.equalTo(loadingContainer)
+        }
+
+        loadingSpinner.snp.makeConstraints { make in
+            make.top.equalTo(loadingMessage.snp.bottom).offset(10)
+            make.centerX.equalTo(loadingContainer)
+            make.size.equalTo(20)
+        }
     }
 }

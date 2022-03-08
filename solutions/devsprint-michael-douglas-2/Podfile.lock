@@ -1,16 +1,20 @@
 PODS:
+  - SnapKit (5.0.1)
   - SnapshotTesting (1.9.0)
 
 DEPENDENCIES:
+  - SnapKit (~> 5.0.0)
   - SnapshotTesting (~> 1.9.0)
 
 SPEC REPOS:
   trunk:
+    - SnapKit
     - SnapshotTesting
 
 SPEC CHECKSUMS:
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SnapshotTesting: 6141c48b6aa76ead61431ca665c14ab9a066c53b
 
-PODFILE CHECKSUM: eed1b6882996396c07abdbbdb955edb2ea0353a2
+PODFILE CHECKSUM: 807432f719392f28de59e9f5e84085e245698515
 
 COCOAPODS: 1.11.2
